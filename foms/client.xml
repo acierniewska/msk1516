@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<objectModel
+        xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd"
+        xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelIdentification notes="Note2">
+        <name>Serving processes for Restaurant FOM</name>
+        <type>FOM</type>
+        <version>3.0</version>
+    </modelIdentification>
+    <objects>
+        <objectClass>
+            <name>HLAobjectRoot</name>
+            <!-- OBIEKTY -->
+            <objectClass>
+                <!-- KLIENCI -->
+                <name>Klienci</name>
+                <sharing>PublishSubscribe</sharing>
+                <attribute>
+                    <name>id</name>
+                    <dataType>IdType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Merit increase</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>liczbaKlientow</name>
+                    <dataType>HLAinteger32BE</dataType>
+                    <updateType>Periodic</updateType>
+                    <updateCondition>1/year</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>czyNiecierpliwi</name>
+                    <dataType>BooleanType</dataType>
+                    <updateType>Periodic</updateType>
+                    <updateCondition>1/year</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>czasStaniaWKolejce</name>
+                    <dataType>TimeInSecType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Employee request</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Employee request</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>czasOczekiwaniaNaPosilek</name>
+                    <dataType>TimeInSecType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Employee request</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>czasSpozywaniaPosilku</name>
+                    <dataType>TimeInSecType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Employee request</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+            </objectClass>
+            <!-- STOLIK -->
+            <objectClass>
+                <name>Stolik</name>
+                <sharing>PublishSubscribe</sharing>
+                <attribute>
+                    <name>id</name>
+                    <dataType>IdType</dataType>
+                    <updateType>Conditional</updateType>
+                    <updateCondition>Merit increase</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>liczbaMiejsc</name>
+                    <dataType>HLAinteger32BE</dataType>
+                    <updateType>Periodic</updateType>
+                    <updateCondition>1/year</updateCondition>
+                    <ownership>DivestAcquire</ownership>
+                    <sharing>PublishSubscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+            </objectClass>
+        </objectClass>
+    </objects>
+    <interactions>
+        <interactionClass>
+            <name>HLAinteractionRoot</name>
+            <!-- INTERAKCJE -->
+            <interactionClass>
+                <!-- Usadow klienta !-->
+                <name>usadowienieKlientow</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>idKlientow</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+                <parameter>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+            </interactionClass>
+            <interactionClass>
+                <!-- Zlozenie zamowienia !-->
+                <name>zlozenieZamowienia</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>listaPosilkow</name>
+                    <dataType>StringType</dataType>
+                </parameter>
+                <parameter>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+            </interactionClass>
+            <interactionClass>
+                <!-- Przekazanie zamowienia !-->
+                <name>przekazanieZamowieniaDoKucharza</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>listaPosilkow</name>
+                    <dataType>StringType</dataType>
+                </parameter>
+                <parameter>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+            </interactionClass>
+            <interactionClass>
+                <!-- Przygotowanie zamówienia !-->
+                <name>przygotowanieZamowienia</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>listaPosilkow</name>
+                    <dataType>StringType</dataType>
+                </parameter>
+                <parameter>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+            </interactionClass>
+            <interactionClass>
+                <!-- Dostarczenie zamówienia !-->
+                <name>dostarczenieZamowienia</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>listaPosilkow</name>
+                    <dataType>StringType</dataType>
+                </parameter>
+                <parameter>
+                    <name>idStolika</name>
+                    <dataType>IdType</dataType>
+                </parameter>
+            </interactionClass>
+            <interactionClass>
+                <!-- Zamknięcie restauracji !-->
+                <name>zamkniecieRestauracji</name>
+                <sharing>PublishSubscribe</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <parameter>
+                    <name>typKomunikatu</name>
+                    <dataType>HLAinteger32BE</dataType>
+                </parameter>
+            </interactionClass>
+        </interactionClass>
+    </interactions>
+    <time>
+        <timeStamp>
+            <dataType>TimeType</dataType>
+        </timeStamp>
+        <lookahead>
+            <dataType>LAType</dataType>
+        </lookahead>
+    </time>
+    <synchronizations>
+        <synchronizationPoint>
+            <label>InitialPublish</label>
+            <dataType>NA</dataType>
+            <capability>NA</capability>
+            <semantics>Achieved when all classes are published and subscribed,
+                and all initially present objects are registered
+            </semantics>
+        </synchronizationPoint>
+        <synchronizationPoint>
+            <label>InitialUpdate</label>
+            <dataType>NA</dataType>
+            <capability>NA</capability>
+            <semantics>Achieved when instance attribute values for all initially
+                present objects are updated
+            </semantics>
+        </synchronizationPoint>
+        <synchronizationPoint>
+            <label>BeginTimeAdvance</label>
+            <dataType>NA</dataType>
+            <capability>NA</capability>
+            <semantics>Achieved when time management services are invoked</semantics>
+        </synchronizationPoint>
+        <synchronizationPoint>
+            <label>PauseExecution</label>
+            <dataType>TimeType</dataType>
+            <capability>NA</capability>
+            <semantics>Achieved when the time advance after the time in the
+                user-supplied tag is attained; time advance
+                requests should then cease
+            </semantics>
+        </synchronizationPoint>
+    </synchronizations>
+    <transportations>
+        <transportation>
+            <name>LowLatency</name>
+            <reliable>No</reliable>
+            <semantics>Choose the delivery mechanism that results in the lowest
+                latency from service initiation to callback invocation at the
+                receiving federate
+            </semantics>
+        </transportation>
+    </transportations>
+    <switches>
+        <autoProvide isEnabled="true"/>
+        <conveyRegionDesignatorSets isEnabled="false"/>
+        <conveyProducingFederate isEnabled="false"/>
+        <attributeScopeAdvisory isEnabled="false"/>
+        <attributeRelevanceAdvisory isEnabled="false"/>
+        <objectClassRelevanceAdvisory isEnabled="true"/>
+        <interactionRelevanceAdvisory isEnabled="true"/>
+        <serviceReporting isEnabled="false"/>
+        <exceptionReporting isEnabled="false"/>
+        <delaySubscriptionEvaluation isEnabled="false"/>
+        <automaticResignAction resignAction="CancelThenDeleteThenDivest"/>
+    </switches>
+    <updateRates>
+        <updateRate>
+            <name>Low</name>
+            <rate>10.56</rate>
+        </updateRate>
+        <updateRate>
+            <name>Hi</name>
+            <rate>60.0</rate>
+        </updateRate>
+    </updateRates>
+    <dataTypes>
+        <simpleDataTypes>
+            <simpleData>
+                <name>TimeType</name>
+                <representation>HLAfloat32BE</representation>
+                <units>Minutes</units>
+                <resolution>0.01667</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>Time representation</semantics>
+            </simpleData>
+            <simpleData>
+                <name>LAType</name>
+                <representation>HLAfloat32BE</representation>
+                <units>Minutes</units>
+                <resolution>0.01667</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>Time interval (non-negative)</semantics>
+            </simpleData>
+            <simpleData>
+                <name>IdType</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>1</resolution>
+                <accuracy>Perfect</accuracy>
+                <semantics>identyfikator</semantics>
+            </simpleData>
+            <simpleData>
+                <name>TimeInSecType</name>
+                <representation>HLAinteger64BE</representation>
+                <units>Seconds</units>
+                <resolution>1</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>Czas</semantics>
+            </simpleData>
+            <simpleData>
+                <name>StringType</name>
+                <representation>HLAunicodeString</representation>
+                <units>NA</units>
+                <resolution>1</resolution>
+                <accuracy>Perfect</accuracy>
+                <semantics>napis</semantics>
+            </simpleData>
+            <simpleData>
+                <name>BooleanType</name>
+                <representation>HLABoolean</representation>
+                <units>NA</units>
+                <resolution>1</resolution>
+                <accuracy>Perfect</accuracy>
+                <semantics>czy stolik zajęty</semantics>
+            </simpleData>
+        </simpleDataTypes>
+    </dataTypes>
+</objectModel>
